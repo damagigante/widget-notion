@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relógio Escuro</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            background: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
+            min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+        }
+        
+        #clock {
+            font-size: 4em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+        
+        @media (max-width: 600px) {
+            #clock {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="clock">00:00:00</div>
+    
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            
+            document.getElementById('clock').textContent = hours + ':' + minutes + ':' + seconds;
+        }
+        
+        window.onload = function() {
+            updateClock();
+            setInterval(updateClock, 1000);
+        };
+    </script>
+</body>
+</html>
