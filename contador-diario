@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador 24h</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif;
+            background: #1a1a1a;
+            color: #ffffff;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .label {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+        
+        #countdown {
+            font-size: 4em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+        
+        @media (max-width: 600px) {
+            #countdown {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="label">Atualiza em:</div>
+    <div id="countdown">00:00:00</div>
+    
+    <script>
+        function updateCountdown() {
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            
+            const diff = tomorrow.getTime() - now.getTime();
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            const hoursStr = hours.toString().padStart(2, '0');
+            const minutesStr = minutes.toString().padStart(2, '0');
+            const secondsStr = seconds.toString().padStart(2, '0');
+            
+            document.getElementById('countdown').textContent = hoursStr + ':' + minutesStr + ':' + secondsStr;
+        }
+        
+        window.onload = function() {
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        };
+    </script>
+</body>
+</html>
