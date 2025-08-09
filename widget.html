@@ -29,16 +29,41 @@
             letter-spacing: 2px;
             color: #F1DFD0;
         }
+
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .label {
+            font-size: 1em;
+            opacity: 0.8;
+        }
+        
+        #countdown {
+            font-size: 1em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #342046;
+        }
         
         @media (max-width: 600px) {
             #clock {
                 font-size: 2.5em;
+            }
+            .label, #countdown {
+                font-size: 1em;
             }
         }
     </style>
 </head>
 <body>
     <div id="clock">00:00:00</div>
+    <div class="container">
+        <span class="label">Atualiza em:</span>
+        <span id="countdown">00:00:00</span>
+    </div>
     
     <script>
         function updateClock() {
@@ -55,6 +80,31 @@
             updateClock();
             setInterval(updateClock, 1000);
         };
+
+         function updateCountdown() {
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            
+            const diff = tomorrow.getTime() - now.getTime();
+            
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            const hoursStr = hours.toString().padStart(2, '0');
+            const minutesStr = minutes.toString().padStart(2, '0');
+            const secondsStr = seconds.toString().padStart(2, '0');
+            
+            document.getElementById('countdown').textContent = hoursStr + ':' + minutesStr + ':' + secondsStr;
+        }
+        
+        window.onload = function() {
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        };
     </script>
 </body>
 </html>
+
