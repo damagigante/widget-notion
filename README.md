@@ -1,2 +1,2 @@
-# relogio-notion
-Mostra hora atual no Notion
+# widget-notion
+Mini aplicativos de suporte às ações no Notion.
