@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget de Clima</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: white;
+            color: black;
+        }
+        .weather-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .current-weather {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .forecast {
+            display: flex;
+            gap: 20px;
+        }
+        .forecast-item {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+        .error {
+            color: red;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="weather-container">
+        <div id="loading" class="loading">Carregando dados do clima...</div>
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="weather-data" style="display: none;">
+            <div class="current-weather">
+                <h3>Agora</h3>
+                <p><strong>Temperatura:</strong> <span id="current-temp"></span>°C</p>
+                <p><strong>Vento:</strong> <span id="current-wind"></span> km/h</p>
+                <p><strong>Condição:</strong> <span id="current-condition"></span></p>
+            </div>
+            
+            <div class="forecast">
+                <div class="forecast-item">
+                    <h4>12:00</h4>
+                    <p><strong>Temp:</strong> <span id="temp-12h"></span>°C</p>
+                    <p><strong>Vento:</strong> <span id="wind-12h"></span> km/h</p>
+                </div>
+                <div class="forecast-item">
+                    <h4>17:00</h4>
+                    <p><strong>Temp:</strong> <span id="temp-17h"></span>°C</p>
+                    <p><strong>Vento:</strong> <span id="wind-17h"></span> km/h</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // SUBSTITUA 'SUA_API_KEY' pela sua chave da WeatherAPI
+        const API_KEY = '9cadb366e05e48beb60181227251008';
+        const CIDADE = 'São Carlos, SP';
+        
+        async function buscarClima() {
+            try {
+                const url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${CIDADE}&days=1&aqi=no&alerts=no`;
+                
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Erro na API: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Dados atuais
+                document.getElementById('current-temp').textContent = data.current.temp_c;
+                document.getElementById('current-wind').textContent = data.current.wind_kph;
+                document.getElementById('current-condition').textContent = data.current.condition.text;
+                
+                // Dados das 12h (índice 12 no array de horas)
+                const dados12h = data.forecast.forecastday[0].hour[12];
+                document.getElementById('temp-12h').textContent = dados12h.temp_c;
+                document.getElementById('wind-12h').textContent = dados12h.wind_kph;
+                
+                // Dados das 17h (índice 17 no array de horas)
+                const dados17h = data.forecast.forecastday[0].hour[17];
+                document.getElementById('temp-17h').textContent = dados17h.temp_c;
+                document.getElementById('wind-17h').textContent = dados17h.wind_kph;
+                
+                // Mostrar dados e esconder loading
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('weather-data').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Erro ao buscar dados do clima:', error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error').textContent = 'Erro ao carregar dados do clima. Verifique sua API key.';
+            }
+        }
+        
+        // Carregar dados quando a página carregar
+        window.addEventListener('load', buscarClima);
+        
+        // Atualizar dados a cada 10 minutos
+        setInterval(buscarClima, 10 * 60 * 1000);
+    </script>
+</body>
+</html>
