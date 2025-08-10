@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Widget de Clima</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif;
             margin: 20px;
-            background-color: white;
-            color: black;
+            overflow: hidden;
+            background-color: #transparent;
+            line-height: 0.5em;
+            color: #F1DFD0;
         }
         .weather-container {
             max-width: 400px;
@@ -18,16 +25,15 @@
         .current-weather {
             margin-bottom: 20px;
             padding: 10px;
-            border: 1px solid #ccc;
         }
         .forecast {
             display: flex;
             gap: 20px;
+            font-size: small;
         }
         .forecast-item {
             flex: 1;
             padding: 10px;
-            border: 1px solid #ccc;
             text-align: center;
         }
         .loading {
