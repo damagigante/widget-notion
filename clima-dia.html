@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Widget de Clima</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif;
             margin: 20px;
@@ -51,23 +46,25 @@
         <div id="loading" class="loading">Carregando dados do clima...</div>
         <div id="error" class="error" style="display: none;"></div>
         <div id="weather-data" style="display: none;">
-            <div class="current-weather">
-                <h3>Agora</h3>
-                <p><strong>Temperatura:</strong> <span id="current-temp"></span>°C</p>
-                <p><strong>Vento:</strong> <span id="current-wind"></span> km/h</p>
-                <p><strong>Condição:</strong> <span id="current-condition"></span></p>
-            </div>
-            
-            <div class="forecast">
-                <div class="forecast-item">
-                    <h4>12:00</h4>
-                    <p><strong>Temp:</strong> <span id="temp-12h"></span>°C</p>
-                    <p><strong>Vento:</strong> <span id="wind-12h"></span> km/h</p>
+            <div class="weather-content">
+                <div class="current-weather">
+                    <h3>Agora</h3>
+                    <p><strong>Temperatura:</strong> <span id="current-temp"></span>°C</p>
+                    <p><strong>Vento:</strong> <span id="current-wind"></span> km/h</p>
+                    <p><strong>Condição:</strong> <span id="current-condition"></span></p>
                 </div>
-                <div class="forecast-item">
-                    <h4>17:00</h4>
-                    <p><strong>Temp:</strong> <span id="temp-17h"></span>°C</p>
-                    <p><strong>Vento:</strong> <span id="wind-17h"></span> km/h</p>
+            
+                <div class="forecast">
+                    <div class="forecast-item">
+                        <h4>12:00</h4>
+                        <p><strong>Temp:</strong> <span id="temp-12h"></span>°C</p>
+                        <p><strong>Vento:</strong> <span id="wind-12h"></span> km/h</p>
+                    </div>
+                    <div class="forecast-item">
+                        <h4>17:00</h4>
+                        <p><strong>Temp:</strong> <span id="temp-17h"></span>°C</p>
+                        <p><strong>Vento:</strong> <span id="wind-17h"></span> km/h</p>
+                    </div>
                 </div>
             </div>
         </div>
