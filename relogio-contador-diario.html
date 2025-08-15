@@ -68,12 +68,14 @@
     </div>
     
     <script>
+        DAY_START = 6; //Média horária do nascer-do-sol
+        DAY_END = 18.5; //Média horária do pôr-do-sol (18h30)
+        
         function updateClock() {
             const now = new Date();
             
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
             
             document.getElementById('clock').textContent = hours + ':' + minutes;
         }
@@ -81,11 +83,36 @@
 
         function updateCountdown() {
             const now = new Date();
-            const tomorrow = new Date(now);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(0, 0, 0, 0);
+            const currentHour = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
+
+            let targetTime;
+
+            // Se ainda é durante o dia útil (6:00-18:30), conta para o fim do dia
+            if (currentHour >= DAY_START && currentHour < DAY_END) {
+                targetTime = new Date(now);
+                targetTime.setHours(Math.floor(DAY_END), (DAY_END % 1) * 60, 0, 0);
+            } 
+            // Se já passou das 18:30 ou ainda não chegou nas 6:00, conta para o início do próximo dia
+            else {
+                targetTime = new Date(now);
+                
+                // Se ainda não chegou nas 6:00 de hoje
+                if (currentHour < DAY_START) {
+                    targetTime.setHours(DAY_START, 0, 0, 0);
+                }
+                // Se já passou das 18:30 de hoje
+                else {
+                    targetTime.setDate(targetTime.getDate() + 1);
+                    targetTime.setHours(DAY_START, 0, 0, 0);
+                }
+            }
             
-            const diff = tomorrow.getTime() - now.getTime();
+            const diff = targetTime.getTime() - now.getTime();
+
+            if (diff <= 0) {
+                document.getElementById('countdown').textContent = '00:00:00';
+                return;
+            }
             
             const hours = Math.floor(diff / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
