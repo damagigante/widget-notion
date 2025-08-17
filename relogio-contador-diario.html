@@ -63,7 +63,7 @@
     <div id="clock">00:00:00</div>
 
     <div class="container">
-        <span class="label">Atualiza em:</span>
+        <span id="label" class="label">Atualiza em:</span>
         <span id="countdown">00:00:00</span>
     </div>
     
@@ -84,6 +84,7 @@
         function updateCountdown() {
             const now = new Date();
             const currentHour = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
+            const notification = "";
 
             let targetTime;
 
@@ -91,6 +92,7 @@
             if (currentHour >= DAY_START && currentHour < DAY_END) {
                 targetTime = new Date(now);
                 targetTime.setHours(Math.floor(DAY_END), (DAY_END % 1) * 60, 0, 0);
+                notification = "Rotina termina em:";
             } 
             // Se já passou das 18:30 ou ainda não chegou nas 6:00, conta para o início do próximo dia
             else {
@@ -99,17 +101,20 @@
                 // Se ainda não chegou nas 6:00 de hoje
                 if (currentHour < DAY_START) {
                     targetTime.setHours(DAY_START, 0, 0, 0);
+                    notification = "O descanso termina em:";
                 }
                 // Se já passou das 18:30 de hoje
                 else {
                     targetTime.setDate(targetTime.getDate() + 1);
                     targetTime.setHours(DAY_START, 0, 0, 0);
+                    notification = "O dia termina em:";
                 }
             }
             
             const diff = targetTime.getTime() - now.getTime();
 
             if (diff <= 0) {
+                document.getElementById("label").innerText = "";
                 document.getElementById('countdown').textContent = '00:00:00';
                 return;
             }
@@ -121,7 +126,8 @@
             const hoursStr = hours.toString().padStart(2, '0');
             const minutesStr = minutes.toString().padStart(2, '0');
             const secondsStr = seconds.toString().padStart(2, '0');
-            
+
+            document.getElementById("label").innerText = notification;
             document.getElementById('countdown').textContent = hoursStr + ':' + minutesStr + ':' + secondsStr;
         }
         
