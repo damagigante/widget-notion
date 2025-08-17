@@ -84,8 +84,8 @@
         function updateCountdown() {
             const now = new Date();
             const currentHour = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
-            const notification = "";
-
+            
+            let notification = "";
             let targetTime;
 
             // Se ainda é durante o dia útil (6:00-18:30), conta para o fim do dia
