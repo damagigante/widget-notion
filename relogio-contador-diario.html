@@ -62,14 +62,14 @@
 <body>
     <div id="clock">00:00:00</div>
 
-   <!--<div class="container">
-        <span id="label" class="label">Atualiza em:</span>
+   <div class="container">
+        <span id="label" class="label">Toque de recolher:</span>
         <span id="countdown">00:00:00</span>
-    </div>-->
+    </div>
     
     <script>
-        DAY_START = 6; //Média horária do nascer-do-sol
-        DAY_END = 18.5; //Média horária do pôr-do-sol (18h30)
+        DAY_START = 4; //Hora de levantar (4h)
+        DAY_END = 21; //Tempo limite para completar as zonas (21h)
         
         function updateClock() {
             const now = new Date();
@@ -92,22 +92,22 @@
             if (currentHour >= DAY_START && currentHour < DAY_END) {
                 targetTime = new Date(now);
                 targetTime.setHours(Math.floor(DAY_END), (DAY_END % 1) * 60, 0, 0);
-                notification = "Em serviço:";
+                notification = "Energia disponível:";
             } 
             // Se já passou das 18:30 ou ainda não chegou nas 6:00, conta para o início do próximo dia
             else {
                 targetTime = new Date(now);
                 
-                // Se ainda não chegou nas 6:00 de hoje
+                // Se ainda não chegou nas 4:00 de hoje
                 if (currentHour < DAY_START) {
                     targetTime.setHours(DAY_START, 0, 0, 0);
                     notification = "Em repouso:";
                 }
-                // Se já passou das 18:30 de hoje
+                // Se já passou das 21h de hoje
                 else {
                     targetTime.setDate(targetTime.getDate() + 1);
                     targetTime.setHours(DAY_START, 0, 0, 0);
-                    notification = "À paisana:";
+                    notification = "Toque de recolher:";
                 }
             }
             
