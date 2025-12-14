@@ -92,7 +92,7 @@
             if (currentHour >= DAY_START && currentHour < DAY_END) {
                 targetTime = new Date(now);
                 targetTime.setHours(Math.floor(DAY_END), (DAY_END % 1) * 60, 0, 0);
-                notification = "Mapa fechará:";
+                notification = "Atualiza em:";
             } 
             // Se já passou das 18:30 ou ainda não chegou nas 6:00, conta para o início do próximo dia
             else {
@@ -101,13 +101,13 @@
                 // Se ainda não chegou nas 4:00 de hoje
                 if (currentHour < DAY_START) {
                     targetTime.setHours(DAY_START, 0, 0, 0);
-                    notification = "Mapa abrirá:";
+                    notification = "Em repouso:";
                 }
                 // Se já passou das 21h de hoje
                 else {
                     targetTime.setDate(targetTime.getDate() + 1);
                     targetTime.setHours(DAY_START, 0, 0, 0);
-                    notification = "Toque de recolher:";
+                    notification = "Em repouso:";
                 }
             }
             
